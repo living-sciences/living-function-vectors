@@ -1,0 +1,83 @@
+{
+  "task": "country-capital",
+  "seed": 42,
+  "n_layers": 32,
+  "n_heads": 16,
+  "n_attn_layers": 8,
+  "full_attn_layers": [
+    3,
+    7,
+    11,
+    15,
+    19,
+    23,
+    27,
+    31
+  ],
+  "n_top_heads": 10,
+  "peak_layer": 3,
+  "peak_frac_depth": 0.094,
+  "zs_fv_peak": 0.024390243902439025,
+  "zs_baseline_peak": 0.0,
+  "canonical_layer": 10,
+  "zs_fv_canonical": 0.0,
+  "zs_baseline_canonical": 0.0,
+  "sl_fv_at_peak": 0.07317073170731707,
+  "sl_baseline_at_peak": 0.2926829268292683,
+  "top_heads": [
+    [
+      19,
+      7,
+      0.04835
+    ],
+    [
+      15,
+      4,
+      0.04646
+    ],
+    [
+      19,
+      6,
+      0.02171
+    ],
+    [
+      31,
+      13,
+      0.01344
+    ],
+    [
+      31,
+      4,
+      0.00867
+    ],
+    [
+      31,
+      15,
+      0.00833
+    ],
+    [
+      31,
+      8,
+      0.00796
+    ],
+    [
+      15,
+      8,
+      0.00676
+    ],
+    [
+      19,
+      14,
+      0.00664
+    ],
+    [
+      7,
+      10,
+      0.00545
+    ]
+  ],
+  "filter_test": 41,
+  "filter_val": 18,
+  "minutes": 4.0,
+  "dtype": "torch.bfloat16"
+}

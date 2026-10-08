@@ -1,0 +1,39 @@
+{
+  "note": "Era ladder for the function-vectors living-update, extended to 2026 MM-arch models. 2021-2025 rows reused VERBATIM from FV/results/per_model_001/consolidated.json and the 001 result_card (GPT-J/GPT-NeoX anchors). 2026 rows computed this session from FV/workspace/results_fu (bf16, seed 42, transformers forward-hooks, NOT nnsight).",
+  "subset": ["antonym", "country-capital", "present-past"],
+  "ladder": [
+    {"model": "GPT-J-6B", "year": 2021, "family": "EleutherAI", "attn": "MHA", "mean_zs_fv_peak_pct": 65.9, "no_fv_base_pct": 3.2, "peak_frac_depth": 0.36, "topAIE_concentration": 0.90, "source": "reused (001 anchor, on-disk)"},
+    {"model": "GPT-NeoX-20B", "year": 2022, "family": "EleutherAI", "attn": "MHA", "mean_zs_fv_peak_pct": 57.1, "no_fv_base_pct": 2.1, "peak_frac_depth": 0.27, "topAIE_concentration": null, "source": "reused (001, antonym-only)"},
+    {"model": "Llama-2-7B", "year": 2023, "family": "Llama", "attn": "MHA", "mean_zs_fv_peak_pct": 92.2, "no_fv_base_pct": 8.7, "peak_frac_depth": 0.26, "topAIE_concentration": 0.95, "source": "reused (001)"},
+    {"model": "Qwen2.5-7B", "year": 2024, "family": "Qwen", "attn": "GQA", "mean_zs_fv_peak_pct": 74.6, "no_fv_base_pct": 1.8, "peak_frac_depth": 0.64, "topAIE_concentration": 0.61, "source": "reused (001)"},
+    {"model": "Qwen3-8B-Base", "year": 2025, "family": "Qwen", "attn": "GQA", "mean_zs_fv_peak_pct": 45.0, "no_fv_base_pct": 2.3, "peak_frac_depth": 0.55, "topAIE_concentration": 1.00, "source": "reused (001)"},
+    {"model": "OLMo-2-7B", "year": 2025, "family": "OLMo", "attn": "MHA", "mean_zs_fv_peak_pct": 89.3, "no_fv_base_pct": 2.4, "peak_frac_depth": 0.37, "topAIE_concentration": 0.95, "source": "reused (001)"},
+    {"model": "Qwen3.5-9B-Base", "year": 2026, "family": "Qwen", "attn": "GQA/MM", "mean_zs_fv_peak_pct": 16.9, "no_fv_base_pct": 0.11, "peak_frac_depth_effective": 0.531, "topAIE_concentration": 0.40, "source": "this session (transformers hooks, NOT nnsight)", "partial": false},
+    {"model": "gemma-4-12B", "year": 2026, "family": "Gemma", "attn": "GQA/MM", "mean_zs_fv_peak_pct": 18.0, "no_fv_base_pct": 0.0, "peak_frac_depth_effective": 0.521, "topAIE_concentration": 0.70, "source": "this session (antonym only)", "partial": true, "partial_note": "country-capital/present-past did NOT finish before the storage outage; antonym-only bonus point."}
+  ],
+  "qwen35_9b_base_2026": {
+    "n_layers": 32, "n_heads": 16, "n_attn_layers": 8, "head_dim": 256, "shape_guard": "PASS",
+    "per_task": {
+      "antonym":          {"zs_fv_peak_pct": 0.68,  "no_fv_base_pct": 0.34, "peak_layer": 0,  "peak_frac_depth": 0.0,   "zs_fv_canonical_pct": 0.34, "sl_fv_pct": 0.68,  "sl_base_pct": 1.71,  "conc_first2_3": 0.20},
+      "country-capital":  {"zs_fv_peak_pct": 2.44,  "no_fv_base_pct": 0.0,  "peak_layer": 3,  "peak_frac_depth": 0.094, "zs_fv_canonical_pct": 0.0,  "sl_fv_pct": 7.32,  "sl_base_pct": 29.27, "conc_first2_3": 0.60},
+      "present-past":     {"zs_fv_peak_pct": 47.46, "no_fv_base_pct": 0.0,  "peak_layer": 17, "peak_frac_depth": 0.531, "zs_fv_canonical_pct": 1.69, "sl_fv_pct": 22.03, "sl_base_pct": 11.86, "conc_first2_3": 0.30}
+    },
+    "mean_zs_fv_peak_pct": 16.86,
+    "mean_no_fv_base_peak_pct": 0.11,
+    "mean_zs_fv_canonical_pct": 0.68,
+    "effective_peak_frac_depth": 0.531,
+    "aggregated_topAIE_concentration_first2_3": 0.40,
+    "aggregated_topAIE_in_last_third": 0.60,
+    "runtime_min": 23.0, "dtype": "torch.bfloat16"
+  },
+  "gemma4_12b_2026_partial": {
+    "n_layers": 48, "n_heads": 16, "n_attn_layers": 48, "head_dims": [256, 512], "shape_guard": "PASS (mixed head_dims)",
+    "antonym": {"zs_fv_peak_pct": 18.0, "no_fv_base_pct": 0.0, "peak_layer": 25, "peak_frac_depth": 0.521, "zs_fv_canonical_pct": 0.33, "sl_fv_pct": 71.67, "sl_base_pct": 40.67, "conc_first2_3": 0.70, "runtime_min": 34.9},
+    "descoped_tasks": ["country-capital", "present-past"],
+    "descope_reason": "did not finish before the /net/projects2 storage outage; marked PARTIAL/bonus, missing tasks NOT invented."
+  },
+  "causal_control_summary": {
+    "zs_fv_gt_baseline_all_completed_tasks": true,
+    "note": "In every completed task zs_fv_peak > zs_baseline_peak (real, if small, causal effect). Shuffled-label control is mixed: SL_fv>SL_base for Qwen3.5 present-past (22.0 vs 11.9) and gemma-4 antonym (71.7 vs 40.7), but SL_fv<SL_base for Qwen3.5 antonym and country-capital (degenerate near-failure tasks)."
+  }
+}

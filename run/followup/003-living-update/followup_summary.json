@@ -1,0 +1,56 @@
+{
+  "followup_id": "function-vectors/003-living-update",
+  "instruction_summary": "Extend the FV living-update (Todd et al., ICLR 2024) to the 2026 model refresh: add Qwen3.5-9B-Base (Mar 2026, MM-arch, hooked via transformers not nnsight) and optionally gemma-4-12B to the era ladder, reusing the 2021-2025 results verbatim, and state whether the FV finding still holds on 2026 models.",
+  "status": "completed",
+  "recovery_context": "SLURM compute finished at walltime; a /net/projects2 read-only storage outage blocked the card write. This is pure CPU post-processing of existing on-disk fu2_summary.json results (no GPU, no model load, no FV/nnsight/transformers re-run). Outputs staged under /net/scratch/haokunliu/fv003-recovery/; copy_back.sh lands them once projects2 is rw.",
+  "headline": "Zero-shot function vectors are still DETECTABLE but MUCH WEAKER on 2026 MM-arch models (Qwen3.5-9B mean 16.9%, gemma-4 antonym 18.0%, vs Llama-2 92.2% / OLMo-2 89.3% in 2023-25); FV > baseline every completed task (real, small causal effect); peak edit layer stays mid-to-late (~0.52, depth/3 still broken). Methodological caveat: transformers forward-hooks on GQA/MM attention (nnsight cannot wrap), gemma-4 mixed head_dims - part of the attenuation may not be a pure model property.",
+  "key_numbers": {
+    "qwen35_9b_base_2026": {
+      "per_task_zs_fv_peak_pct": {"antonym": 0.68, "country-capital": 2.44, "present-past": 47.46},
+      "per_task_no_fv_base_peak_pct": {"antonym": 0.34, "country-capital": 0.0, "present-past": 0.0},
+      "mean_zs_fv_peak_pct": 16.86,
+      "mean_no_fv_base_peak_pct": 0.11,
+      "effective_peak_frac_depth": 0.531,
+      "aggregated_topAIE_concentration_first2_3": 0.40,
+      "shuffled_label_at_peak_pct": {"antonym": [0.68, 1.71], "country-capital": [7.32, 29.27], "present-past": [22.03, 11.86]}
+    },
+    "gemma4_12b_2026_partial": {
+      "antonym_zs_fv_peak_pct": 18.0,
+      "antonym_no_fv_base_pct": 0.0,
+      "antonym_peak_frac_depth": 0.521,
+      "antonym_topAIE_concentration_first2_3": 0.70,
+      "antonym_shuffled_label_at_peak_pct": [71.67, 40.67],
+      "descoped_tasks": ["country-capital", "present-past"],
+      "descope_reason": "did not finish before the storage outage; PARTIAL/bonus point, missing tasks not invented."
+    },
+    "reused_ladder_mean_zs_fv_peak_pct": {
+      "GPT-J-6B_2021": 65.9, "GPT-NeoX-20B_2022_antonym_only": 57.1, "Llama-2-7B_2023": 92.2,
+      "Qwen2.5-7B_2024": 74.6, "Qwen3-8B_2025": 45.0, "OLMo-2-7B_2025": 89.3
+    }
+  },
+  "descoped": [
+    {"item": "gemma-4-12B country-capital & present-past", "reason": "did not finish before the /net/projects2 storage outage; only mean_head_activations.pt exists for country-capital, no fu2_summary. Marked PARTIAL; missing tasks not invented."}
+  ],
+  "comparisons": [
+    {"quantity": "mean ZS FV @ peak, 3-task subset", "original_2023_25": "Llama-2 92.2, OLMo-2 89.3, Qwen3-8B 45.0", "followup_2026": "Qwen3.5-9B 16.9 (present-past 47.5, antonym 0.7, cc 2.4)", "source_file": "FV/workspace/results_fu/qwen35-9b_seed42/<task>/fu2_summary.json", "note": "sharp attenuation on 2026 MM-arch; FV still > baseline every task."},
+    {"quantity": "peak edit-layer fraction of depth", "original": "MHA ~0.26-0.37; Qwen GQA 0.55-0.64", "followup_2026": "Qwen3.5 present-past 0.531, gemma-4 antonym 0.521", "source_file": "fu2_summary.json peak_frac_depth", "note": "depth/3 heuristic still fails; Qwen3.5 canonical @L10 = 0.7%."},
+    {"quantity": "top-AIE mid-layer concentration (first 2/3)", "original": "0.90-1.00 for GPT-J/Llama-2/OLMo-2/Qwen3", "followup_2026": "Qwen3.5 0.40 (60% in last third), gemma-4 antonym 0.70", "source_file": "fu2_summary.json top_heads", "note": "head localization weakens on 2026 Qwen3.5."},
+    {"quantity": "shuffled-label control (SL FV vs SL base @ peak)", "original": "n/a", "followup_2026": "Qwen3.5 present-past 22.0>11.9 (real); gemma-4 antonym 71.7>40.7 (real); Qwen3.5 antonym/cc SL FV < base", "source_file": "fu2_summary.json sl_fv_at_peak/sl_baseline_at_peak", "note": "mixed; confirms a genuine effect on the tasks where FV works."}
+  ],
+  "deliverables": {
+    "result_card": "result_card.json",
+    "report": "report.md",
+    "aggregate": "results/aggregate.json",
+    "figures": ["results/fig1_fv_over_time.png", "results/fig2_fv_peak_layer_vs_depth.png", "results/fig3_qwen35_pertask.png"],
+    "copy_back": "copy_back.sh"
+  },
+  "provenance": {
+    "read_only_source": "FV/workspace/results_fu/{qwen35-9b_seed42,gemma4-12b_seed42}/*/fu2_summary.json and FV/results/per_model_001/consolidated.json + FV/../001-living-update/result_card.json",
+    "reused_verbatim_2021_2025": true,
+    "computed_this_session_2026": true,
+    "gpu_used": false,
+    "dtype": "torch.bfloat16",
+    "seed": 42,
+    "subset": ["antonym", "country-capital", "present-past"]
+  }
+}

@@ -1,0 +1,16 @@
+loading Qwen3.5-9B-Base ...
+loaded in 5s; layer_types full-attn at [3, 7, 11, 15, 19, 23, 27, 31]
+[shape-guard PASS] n_heads=16 head_dim=256 o_proj.in=4096 on 8 full-attn layers [3, 7, 11, 15, 19, 23, 27, 31]
+  filter_test=293 filter_val=107
+  CIE done 2.3 min
+  ZS sweep 10.3 min; peak L0 FV=0.007 base=0.003
+[done] antonym 14.3min peak L0(0.0) ZS FV=0.007 base=0.003 SL=0.007
+  filter_test=41 filter_val=18
+  CIE done 2.3 min
+  ZS sweep 1.5 min; peak L3 FV=0.024 base=0.000
+[done] country-capital 4.0min peak L3(0.094) ZS FV=0.024 base=0.000 SL=0.073
+  filter_test=59 filter_val=27
+  CIE done 2.3 min
+  ZS sweep 2.1 min; peak L17 FV=0.475 base=0.000
+[done] present-past 4.7min peak L17(0.531) ZS FV=0.475 base=0.000 SL=0.220
+[MODEL DONE] qwen35-9b total 23.0 min

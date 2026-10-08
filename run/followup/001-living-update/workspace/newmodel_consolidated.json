@@ -1,0 +1,134 @@
+{
+  "llama2-7b": {
+    "name": "Llama-2-7B",
+    "year": 2023,
+    "family": "Llama",
+    "attn": "MHA",
+    "K": 20,
+    "mean_zs_peak": 92.2,
+    "mean_zs_canon": 89.1,
+    "mean_base_canon": 8.7,
+    "mean_base_peak": 8.7,
+    "mean_sl": 88.8,
+    "peak_frac_mean": 0.26,
+    "per_task_peak": {
+      "antonym": 85.0,
+      "country-capital": 95.1,
+      "present-past": 96.6
+    },
+    "per_task_canon": {
+      "antonym": 80.6,
+      "country-capital": 95.1,
+      "present-past": 91.5
+    },
+    "per_task_peaklayer": {
+      "antonym": 12,
+      "country-capital": 10,
+      "present-past": 3
+    },
+    "concentration": 0.95,
+    "mean_layer_frac": 0.436,
+    "pms_topK": 0.0479,
+    "pms_all": 0.0255,
+    "dtype": "torch.bfloat16"
+  },
+  "qwen2.5-7b": {
+    "name": "Qwen2.5-7B",
+    "year": 2024,
+    "family": "Qwen",
+    "attn": "GQA",
+    "K": 18,
+    "mean_zs_peak": 74.6,
+    "mean_zs_canon": 6.4,
+    "mean_base_canon": 1.8,
+    "mean_base_peak": 1.8,
+    "mean_sl": 62.7,
+    "peak_frac_mean": 0.643,
+    "per_task_peak": {
+      "antonym": 64.0,
+      "country-capital": 78.6,
+      "present-past": 81.4
+    },
+    "per_task_canon": {
+      "antonym": 12.7,
+      "country-capital": 4.8,
+      "present-past": 1.7
+    },
+    "per_task_peaklayer": {
+      "antonym": 16,
+      "country-capital": 19,
+      "present-past": 19
+    },
+    "concentration": 0.611,
+    "mean_layer_frac": 0.663,
+    "pms_topK": 0.0537,
+    "pms_all": 0.0438,
+    "dtype": "torch.bfloat16"
+  },
+  "qwen3-8b": {
+    "name": "Qwen3-8B-Base",
+    "year": 2025,
+    "family": "Qwen",
+    "attn": "GQA",
+    "K": 20,
+    "mean_zs_peak": 45.0,
+    "mean_zs_canon": 6.3,
+    "mean_base_canon": 2.3,
+    "mean_base_peak": 2.3,
+    "mean_sl": 73.2,
+    "peak_frac_mean": 0.361,
+    "per_task_peak": {
+      "antonym": 48.4,
+      "country-capital": 5.1,
+      "present-past": 81.4
+    },
+    "per_task_canon": {
+      "antonym": 8.8,
+      "country-capital": 5.1,
+      "present-past": 5.1
+    },
+    "per_task_peaklayer": {
+      "antonym": 19,
+      "country-capital": 0,
+      "present-past": 20
+    },
+    "concentration": 1.0,
+    "mean_layer_frac": 0.578,
+    "pms_topK": 0.0752,
+    "pms_all": 0.0385,
+    "dtype": "torch.bfloat16"
+  },
+  "olmo2-7b": {
+    "name": "OLMo-2-7B",
+    "year": 2025,
+    "family": "OLMo",
+    "attn": "MHA",
+    "K": 20,
+    "mean_zs_peak": 89.3,
+    "mean_zs_canon": 86.3,
+    "mean_base_canon": 2.4,
+    "mean_base_peak": 2.4,
+    "mean_sl": 92.6,
+    "peak_frac_mean": 0.365,
+    "per_task_peak": {
+      "antonym": 73.1,
+      "country-capital": 94.9,
+      "present-past": 100.0
+    },
+    "per_task_canon": {
+      "antonym": 70.9,
+      "country-capital": 89.7,
+      "present-past": 98.3
+    },
+    "per_task_peaklayer": {
+      "antonym": 9,
+      "country-capital": 12,
+      "present-past": 14
+    },
+    "concentration": 0.95,
+    "mean_layer_frac": 0.514,
+    "pms_topK": 0.0187,
+    "pms_all": 0.0252,
+    "dtype": "torch.bfloat16"
+  }
+}

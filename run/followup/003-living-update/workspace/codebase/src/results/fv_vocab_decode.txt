@@ -1,0 +1,7 @@
+Loading:  EleutherAI/gpt-j-6b
+antonym: [(' lesser', 0.18823), (' counterpart', 0.0535), ('Others', 0.02977), (' nonexistent', 0.02196), (' counterparts', 0.02179), ('wrong', 0.01711), (' destroy', 0.01353), (' negate', 0.00894), (' barb', 0.00894), (' cripp', 0.00887)]
+capitalize: [(' Copy', 0.02908), (' Adapter', 0.02431), (' Autom', 0.01923), (' Actor', 0.01474), (' Meaning', 0.01474), (' Vanilla', 0.01463), (' Medium', 0.01451), (' Draw', 0.01395), (' Container', 0.01385), (' Drill', 0.01321)]
+country-capital: [(' Moscow', 0.10724), (' Bangkok', 0.10236), (' London', 0.06305), (' Berlin', 0.06305), (' Athens', 0.06015), (' Paris', 0.05832), (' Madrid', 0.05478), (' Budapest', 0.04987), (' Jerusalem', 0.04071), (' Istanbul', 0.0322)]
+english-french: [(' ├', 0.07611), (' embr', 0.03857), (' masc', 0.03827), (' �', 0.03223), (' 神', 0.03101), (' bapt', 0.02591), (' é', 0.01822), (' dé', 0.01464), (' aux', 0.01453), (' É', 0.01453)]
+present-past: [('received', 0.34106), ('changed', 0.09619), ('answered', 0.03027), ('killed', 0.0265), (' Changed', 0.02214), (' routed', 0.01865), ('enabled', 0.01385), ('updated', 0.01223), (' retrieved', 0.01195), ('Changed', 0.0099)]
+singular-plural: [('cards', 0.14514), ('stocks', 0.08801), (' helmets', 0.06854), ('phones', 0.04031), ('items', 0.03845), ('bags', 0.03699), ('models', 0.03671), ('chairs', 0.02927), (' guitars', 0.0186), ('boats', 0.0153)]

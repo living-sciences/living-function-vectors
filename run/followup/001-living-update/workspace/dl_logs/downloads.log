@@ -1,0 +1,10 @@
+downloading Qwen/Qwen2.5-7B
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files:  57%|█████▋    | 8/14 [00:00<00:00, 18.69it/s]Fetching 14 files:  71%|███████▏  | 10/14 [00:20<00:08,  2.00s/it]Fetching 14 files:  79%|███████▊  | 11/14 [01:36<00:26,  8.77s/it]Fetching 14 files:  86%|████████▌ | 12/14 [02:35<00:25, 12.92s/it]Fetching 14 files:  93%|█████████▎| 13/14 [02:35<00:11, 11.95s/it]Fetching 14 files: 100%|██████████| 14/14 [14:52<00:00, 63.77s/it]Fetching 14 files: 100%|██████████| 14/14 [14:52<00:00, 63.77s/it]
+done Qwen/Qwen2.5-7B
+downloading Qwen/Qwen3-8B-Base
+Fetching 14 files:   0%|          | 0/14 [00:00<?, ?it/s]Fetching 14 files:  57%|█████▋    | 8/14 [00:00<00:00, 14.20it/s]Fetching 14 files:  64%|██████▍   | 9/14 [00:17<00:09,  1.91s/it]Fetching 14 files:  71%|███████▏  | 10/14 [00:19<00:07,  1.97s/it]Fetching 14 files:  79%|███████▊  | 11/14 [01:01<00:16,  5.55s/it]Fetching 14 files:  86%|████████▌ | 12/14 [01:01<00:10,  5.11s/it]Fetching 14 files: 100%|██████████| 14/14 [01:44<00:00,  7.44s/it]Fetching 14 files: 100%|██████████| 14/14 [01:44<00:00,  7.44s/it]
+done Qwen/Qwen3-8B-Base
+downloading allenai/OLMo-2-1124-7B
+Fetching 16 files:   0%|          | 0/16 [00:00<?, ?it/s]Fetching 16 files:  50%|█████     | 8/16 [00:00<00:00, 12.05it/s]Fetching 16 files:  62%|██████▎   | 10/16 [00:12<00:07,  1.29s/it]Fetching 16 files:  69%|██████▉   | 11/16 [03:35<01:37, 19.57s/it]Fetching 16 files:  81%|████████▏ | 13/16 [03:59<00:55, 18.39s/it]Fetching 16 files:  88%|████████▊ | 14/16 [03:59<00:34, 17.10s/it]Fetching 16 files:  94%|█████████▍| 15/16 [03:59<00:15, 15.96s/it]Fetching 16 files: 100%|██████████| 16/16 [04:10<00:00, 15.66s/it]Fetching 16 files: 100%|██████████| 16/16 [04:10<00:00, 15.66s/it]
+done allenai/OLMo-2-1124-7B
+ALL DOWNLOADS DONE

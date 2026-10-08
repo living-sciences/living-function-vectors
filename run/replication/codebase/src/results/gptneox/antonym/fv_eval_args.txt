@@ -1,0 +1,36 @@
+{
+  "dataset_name": "antonym",
+  "n_top_heads": 50,
+  "edit_layer": -1,
+  "model_name": "EleutherAI/gpt-neox-20b",
+  "root_data_dir": "../dataset_files",
+  "save_path_root": "results/gptneox",
+  "ie_path_root": null,
+  "seed": 42,
+  "device": "cuda",
+  "mean_activations_path": "results/gptneox/antonym/antonym_mean_head_activations.pt",
+  "indirect_effect_path": "results/gptneox/antonym/antonym_indirect_effect.pt",
+  "test_split": 0.3,
+  "n_shots": 10,
+  "n_mean_activations_trials": 100,
+  "n_indirect_effect_trials": 25,
+  "prefixes": {
+    "input": "Q:",
+    "output": "A:",
+    "instructions": ""
+  },
+  "separators": {
+    "input": "\n",
+    "output": "\n\n",
+    "instructions": ""
+  },
+  "compute_baseline": true,
+  "generate_str": false,
+  "metric": "f1_score",
+  "universal_set": false,
+  "revision": null,
+  "fs_results_file_name": "results/gptneox/antonym/fs_results_layer_sweep.json",
+  "zs_results_file_name": "results/gptneox/antonym/zs_results_layer_sweep.json",
+  "fs_shuffled_results_file_name": "results/gptneox/antonym/fs_shuffled_results_layer_sweep.json",
+  "baseline_file_name": "results/gptneox/antonym/model_baseline.json"
+}

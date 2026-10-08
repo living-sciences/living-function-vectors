@@ -1,0 +1,65 @@
+{
+  "instruction_summary": "Test whether the four load-bearing findings of Todd et al. (Function Vectors, ICLR 2024) still hold in 2023-2025 models across families (Llama/Qwen/OLMo) and the MHA->GQA shift, using an era ladder anchored on the paper's GPT-J-6B.",
+  "completed": true,
+  "cost_accounting": {
+    "gpu": "1x NVIDIA A40 48GB",
+    "productive_gpu_hours_approx": 3.9,
+    "debugging_gpu_hours_approx": 2.7,
+    "notes": "Debugging overhead was one fp32 Llama-2 antonym pass (~2.7 GPU-h) used to find a case-sensitivity bug + measure cost; discarded and re-run in bf16. Total wall-clock ~6.6 GPU-h, under the 8 GPU-h cap.",
+    "per_model_minutes": {"llama2-7b": 46.6, "qwen2.5-7b": 37.0, "qwen3-8b": 64.6, "olmo2-7b": 51.5}
+  },
+  "cost_cap_applied": {
+    "seeds": 1, "seed": 42,
+    "task_subset": ["antonym", "country-capital", "present-past"],
+    "reason_for_subset": "fp32 was infeasible (CIE ~30min + full dual layer-sweep ~100min per task); the 3-task subset is the cost cap's explicit fallback. Applied to ALL new models uniformly.",
+    "T_cie": 15, "n_mean_activations_trials": 50,
+    "K_per_model": {"llama2-7b": 20, "qwen2.5-7b": 18, "qwen3-8b": 20, "olmo2-7b": 20},
+    "SL_measured": "at peak layer only (not full sweep)",
+    "C16_numheads": "flagship task antonym per model"
+  },
+  "steps": [
+    {"description": "Copy replication codebase to followup workspace (read-only reuse of dataset_files, .venv)", "command": "cp -r replication/codebase followup/001-living-update/codebase", "exit_code": 0, "outputs": ["codebase/"]},
+    {"description": "Add qwen branch + shape guard; fix case-insensitive arch dispatch + generic o_proj projection (original bug: local 'Llama-...' path failed lowercase 'llama' checks -> UnboundLocalError; qwen had no branch)", "command": "edit utils/model_utils.py, utils/extract_utils.py, utils/intervention_utils.py; run_fu.py (shape_guard), run_fu2.py (fast driver)", "exit_code": 0, "outputs": ["codebase/src/run_fu2.py", "codebase/src/hl_fu.py", "codebase/src/numheads_fu.py"]},
+    {"description": "Download base models", "command": "snapshot_download Qwen/Qwen2.5-7B, Qwen/Qwen3-8B-Base, allenai/OLMo-2-1124-7B", "exit_code": 0, "outputs": ["hf-cache/hub/*"]},
+    {"description": "CIE + ZS layer sweep + SL@peak, bf16, 3-task subset, 4 core models", "command": "python run_fu2.py --model_name=<id> --nickname=<nick> --n_top_heads=<K> --tasks=antonym,country-capital,present-past --n_mean=50 --n_cie=15", "exit_code": 0, "outputs": ["codebase/src/results_fu/<nick>_seed42/<task>/fu2_summary.json"]},
+    {"description": "Head localization (C5) + induction prefix-match (C13) per model", "command": "python hl_fu.py --model_name=<id> --nickname=<nick> --n_top_heads=<K>", "exit_code": 0, "outputs": ["codebase/src/results_fu/<nick>_seed42/head_localization.json"]},
+    {"description": "C16 #heads plateau for flagship antonym per model (FV from this session's top-k AIE heads)", "command": "python numheads_fu.py --model_name=<id> --nickname=<nick> --tasks=antonym --max_heads=30 --cap_filter=150", "exit_code": 0, "outputs": ["codebase/src/results_fu/<nick>_seed42/numheads/antonym_perf_v_heads.json"]},
+    {"description": "Isolated overlay venv (transformers 4.53) for Qwen3 (qwen3 arch unsupported by pinned 4.49); reuses base torch/baukit, pinned numpy 1.25", "command": "uv venv qwen3-venv + base.pth + uv pip install transformers==4.53.2 numpy==1.25.0", "exit_code": 0, "outputs": ["workspace/qwen3-venv/"]},
+    {"description": "Figures + deliverables", "command": "python workspace/make_figures.py", "exit_code": 0, "outputs": ["results/fv_over_time.pdf", "results/fv_peak_layer_vs_depth.pdf", "results/fv_head_concentration.pdf"]}
+  ],
+  "key_results": {
+    "mean_zs_fv_peak_pct_3task_subset": {"GPT-J-6B_2021": 65.9, "GPT-NeoX-20B_2022_antonym_only": 57.1, "Llama-2-7B_2023": 92.2, "Qwen2.5-7B_2024": 74.6, "Qwen3-8B_2025": 45.0, "OLMo-2-7B_2025": 89.3},
+    "mean_zs_fv_canonical_depth3_pct": {"GPT-J-6B": 49.6, "Llama-2-7B": 89.1, "Qwen2.5-7B": 6.4, "Qwen3-8B": 6.3, "OLMo-2-7B": 86.3},
+    "no_fv_baseline_pct": {"GPT-J-6B": 3.2, "GPT-NeoX-20B": 2.1, "Llama-2-7B": 8.7, "Qwen2.5-7B": 1.8, "Qwen3-8B": 2.3, "OLMo-2-7B": 2.4},
+    "peak_layer_frac_depth_effective": {"GPT-J-6B": 0.36, "GPT-NeoX-20B": 0.27, "Llama-2-7B": 0.26, "Qwen2.5-7B": 0.64, "Qwen3-8B": 0.545, "OLMo-2-7B": 0.37},
+    "topAIE_concentration_frac_first_two_thirds": {"GPT-J-6B": 0.90, "Llama-2-7B": 0.95, "Qwen2.5-7B": 0.61, "Qwen3-8B": 1.00, "OLMo-2-7B": 0.95},
+    "induction_prefix_match_topK_vs_all": {"GPT-J-6B": [0.182, 0.044], "Llama-2-7B": [0.048, 0.026], "Qwen2.5-7B": [0.054, 0.044], "Qwen3-8B": [0.075, 0.039], "OLMo-2-7B": [0.019, 0.025]},
+    "numheads_95pct_plateau_k_antonym": {"GPT-J-6B_paper": 10, "Llama-2-7B": 11, "Qwen2.5-7B": 25, "Qwen3-8B": 27, "OLMo-2-7B": 8},
+    "notable": "FV survives (high peak-layer accuracy) across all families EXCEPT: (a) Qwen3 country-capital FV fails entirely (peak 5.1% = baseline); (b) the Qwen GQA family's optimal edit layer drifted much later (0.64/0.55 depth) so the paper's canonical depth/3 layer collapses to ~6% for Qwen while Llama-2/OLMo-2 still peak early-mid."
+  },
+  "comparison_to_original": [
+    {"quantity": "mean top-1 zero-shot FV accuracy (6-task, canonical @L9)", "original": "paper 57.5%, replicated 55.0%", "followup": "new models measured at peak on 3-task subset (see table)", "source_file": "replication/codebase/src/results/gptj_seed{42,1,2}/<task>/zs_results_layer_sweep.json key '9'", "note": "GPT-J anchor read from disk; new numbers this session."},
+    {"quantity": "mean ZS FV @ peak, 3-task subset {antonym,country-capital,present-past}", "original": "GPT-J 65.9%", "followup": "Llama-2 92.2, Qwen2.5 74.6, Qwen3 45.0, OLMo-2 89.3", "source_file": "gptj_seed*/<task>/zs_results_layer_sweep.json (peak per seed)", "note": "peak-to-peak, architecture-fair. FV strengthens for Llama-2/OLMo-2; Qwen3 hurt by country-capital failure."},
+    {"quantity": "per-task ZS FV @ L9 canonical (GPT-J anchor)", "original": "antonym 46.7, country-capital 86.1, present-past 16.0", "followup": "see report table", "source_file": "gptj_seed*/<task>/zs_results_layer_sweep.json", "note": "matches instruction-provided anchor exactly."},
+    {"quantity": "peak edit-layer fraction of depth", "original": "GPT-J early-mid (0.36)", "followup": "Llama-2 0.26, OLMo-2 0.37 (hold); Qwen2.5 0.64, Qwen3 0.55 (drift later)", "source_file": "gptj_seed42/<task>/zs_results_layer_sweep.json (all layer keys)", "note": "C2 layer-dependence: peak drifts later for the GQA Qwen family."},
+    {"quantity": "top-AIE head mid-layer concentration + induction prefix-match", "original": "GPT-J 9/10 in early-mid; flagged induction heads 8-1 .545, 12-10 .569, 24-6 .333", "followup": "concentration 0.61-1.00; induction top-K enriched vs all for Llama-2/Qwen2.5/Qwen3, NOT for OLMo-2", "source_file": "replication/codebase/src/results/head_localization.txt", "note": "C5 mid-layer localization persists; C13 induction overlap is model-dependent."},
+    {"quantity": "GPT-NeoX-20B antonym (2022 rung, reused)", "original": "ZS peak 57.1% @L12, SL 83.9% @L12", "followup": "reused as-is (not recomputed)", "source_file": "replication/codebase/src/results/gptneox/antonym/{zs,fs_shuffled}_results_layer_sweep.json", "note": "antonym-only rung."}
+  ],
+  "artifacts": [
+    "results/fv_over_time.pdf", "results/fv_peak_layer_vs_depth.pdf", "results/fv_head_concentration.pdf",
+    "results/fig1_fv_over_time.png", "results/fig2_fv_peak_layer_vs_depth.png", "results/fig3_fv_head_concentration.png",
+    "codebase/src/results_fu/<nick>_seed42/<task>/fu2_summary.json (per model/task)",
+    "codebase/src/results_fu/<nick>_seed42/head_localization.json (per model)",
+    "codebase/src/results_fu/<nick>_seed42/numheads/antonym_perf_v_heads.json (per model)"
+  ],
+  "deviations": [
+    "bf16 for all new models instead of fp32 (instruction 3.5): fp32 just upcasts natively-bf16 weights (no accuracy gain) and made the study infeasible under the 8 GPU-h / 90-min-per-model cap. Rank-based FV accuracies are unaffected.",
+    "3-task subset {antonym, country-capital, present-past} for ALL new models (cost cap's explicit fallback), not the full 6 tasks. GPT-J anchor recomputed on the same subset for fair comparison (65.9% peak / 49.6% canonical).",
+    "SL (shuffled-label) FV measured at the peak layer only, not a full 32-layer sweep (the 10-shot-prompt sweep is the cost sink). ZS FV still fully swept for peak detection.",
+    "C16 #heads plateau run for the flagship antonym task per model (not all 3), and built from THIS session's top-k AIE heads (not the paper's hardcoded universal sets, which do not exist for the new models); filter set capped to 150 for the ablation.",
+    "Qwen3-8B-Base required transformers 4.53 (pinned venv is 4.49, which does not recognize the qwen3 arch). Built an isolated overlay venv reusing base torch/baukit; the pinned run venv was NOT modified.",
+    "Rung 6 Llama-3.1-8B-Instruct SKIPPED: gated and not present in local shared_models. 2024 covered by Qwen2.5; 2025 by Qwen3 + OLMo-2.",
+    "GPT-J and GPT-NeoX rungs reused from disk (fp16 on-disk numbers), not recomputed; new models are bf16 (precision note).",
+    "Code fix (not a scope change): made architecture dispatch case-insensitive and the head-projection generic; original code raised UnboundLocalError for the local capital-'Llama' path and for Qwen."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "Zero-shot function vectors survive 2021→2025 and the MHA→GQA shift: mean top-1 accuracy at the peak edit layer rises from GPT-J 65.9% to Llama-2 92.2% / OLMo-2 89.3%, with the mid-layer head-localization signature intact — but the optimal edit layer drifts later in the Qwen (GQA) family, breaking the paper's depth/3 heuristic.",
+  "status": "completed",
+  "metrics": [
+    {"label": "Mean ZS FV acc @ peak — Llama-2-7B (2023)", "value": "92.2%", "baseline": "65.9%",
+     "baseline_label": "GPT-J-6B, same 3-task subset (replication gptj_seed*/…zs_results_layer_sweep.json)",
+     "note": "FV strengthens vs the 2021 anchor; no-FV baseline 8.7%"},
+    {"label": "Mean ZS FV acc @ peak — OLMo-2-7B (2025)", "value": "89.3%", "baseline": "65.9%",
+     "baseline_label": "GPT-J-6B, same subset (on-disk)", "note": "MHA 2025 model; no-FV baseline 2.4%"},
+    {"label": "Mean ZS FV acc @ peak — Qwen2.5-7B (2024, GQA)", "value": "74.6%", "baseline": "65.9%",
+     "baseline_label": "GPT-J-6B, same subset (on-disk)", "note": "survives under GQA, but only at layer 0.64·depth (canonical depth/3 gives 6.4%)"},
+    {"label": "Peak edit-layer (fraction of depth), Qwen family", "value": "0.55–0.64", "baseline": "0.36",
+     "baseline_label": "GPT-J-6B peak (on-disk)", "note": "C2: the FV peak drifted later for GQA; depth/3 heuristic fails for Qwen"},
+    {"label": "Top-AIE mid-layer concentration (frac in first ⅔)", "value": "0.61–1.00", "baseline": "0.90",
+     "baseline_label": "GPT-J-6B (head_localization.txt)", "note": "C5 mid-layer localization persists across families"}
+  ],
+  "tables": [
+    {"title": "Era ladder — zero-shot FV accuracy (this session, bf16; GPT-J/NeoX reused from disk)",
+     "columns": ["Model", "Year", "Attn", "ZS FV % (peak)", "no-FV %", "peak frac-depth", "concentration"],
+     "rows": [
+       ["GPT-J-6B (anchor)", "2021", "MHA", "65.9", "3.2", "0.36", "0.90"],
+       ["GPT-NeoX-20B*", "2022", "MHA", "57.1", "2.1", "0.27", "—"],
+       ["Llama-2-7B", "2023", "MHA", "92.2", "8.7", "0.26", "0.95"],
+       ["Qwen2.5-7B", "2024", "GQA", "74.6", "1.8", "0.64", "0.61"],
+       ["Qwen3-8B-Base", "2025", "GQA", "45.0†", "2.3", "0.55", "1.00"],
+       ["OLMo-2-7B", "2025", "MHA", "89.3", "2.4", "0.37", "0.95"]
+     ],
+     "highlight_row": 0}
+  ],
+  "figures": [
+    {"file": "results/fig1_fv_over_time.png",
+     "caption": "Mean top-1 zero-shot FV accuracy at each model's peak edit layer vs release year (3-task subset; GPT-NeoX antonym-only). Color = family, marker = MHA (circle) / GQA (square); faint line = no-FV baseline; stems show the base→+FV gap. FV survives and generally strengthens 2021→2025.",
+     "alt": "Scatter of FV accuracy 57-92% across 2021-2025 far above a near-zero baseline, colored by family."},
+    {"file": "results/fig2_fv_peak_layer_vs_depth.png",
+     "caption": "Peak FV edit layer as a fraction of model depth vs year. Llama-2/OLMo-2 stay in the paper's early-mid band (~0.26–0.37); the Qwen GQA family drifts later (0.55–0.64), so editing at depth/3 no longer works for Qwen.",
+     "alt": "Peak-layer fraction near 0.3 for most models but 0.55-0.64 for the two Qwen GQA models."},
+    {"file": "results/fig3_fv_head_concentration.png",
+     "caption": "Left: top-AIE heads remain concentrated in the first ⅔ of layers (C5) across families. Right: prefix-matching (induction) score of top-K AIE heads vs all heads (C13) — enriched for GPT-J/Llama-2/Qwen but not OLMo-2.",
+     "alt": "Bar charts of mid-layer head concentration and induction-head overlap per model."}
+  ],
+  "notes": [
+    "bf16 (native precision) used for all new models instead of the instruction's fp32, for the 8 GPU-h budget; rank-based accuracies are unaffected. GPT-J/NeoX reused fp16 from disk.",
+    "3-task subset {antonym, country-capital, present-past} (cost cap fallback) for all new models; GPT-J anchor recomputed on the same subset. Full-6-task GPT-J anchor: paper 57.5% / replicated 55.0% @L9.",
+    "SL FV measured at peak layer only; C16 #heads plateau for antonym per model (plateau k: Llama-2 11, OLMo-2 8, matching paper ~10; Qwen2.5 25, Qwen3 27 — GQA needs more heads).",
+    "Two model-specific failures: Qwen3 country-capital FV fails entirely (5.1% = baseline); OLMo-2 top-AIE heads are NOT induction-enriched.",
+    "Qwen3-8B needed transformers 4.53 in an isolated overlay venv (pinned 4.49 lacks the qwen3 arch); the pinned run venv was untouched. Llama-3.1-8B-Instruct (rung 6) skipped: gated, not local. Single seed (42).",
+    "Shape guard (o_proj.in == n_heads·head_dim) passed for all 4 run models; no model was skipped for invalid head decomposition."
+  ],
+  "report_file": "report.md"
+}

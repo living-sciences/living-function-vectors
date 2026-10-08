@@ -1,0 +1,8 @@
+status @ Tue Sep  8 07:34:58 PM CDT 2026
+step3 tasks done:
+      5 antonym
+      5 capitalize
+      5 country-capital
+      1 english-french
+neox size:
+15G	/net/projects2/chai-lab-models/haokunliu/alignment-batch/hf-cache/hub/models--EleutherAI--gpt-neox-20b

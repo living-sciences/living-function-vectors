@@ -1,0 +1,48 @@
+{
+  "instruction_summary": "Analysis-only re-analysis of 001's 2021->2025 era ladder: how FV effect size, peak edit-layer-as-fraction-of-depth, and head-localization concentration vary with scale/family/generation and the MHA->GQA shift; fit peak_layer ~ alpha*L + beta and restate Todd et al.'s claim for 2025 models.",
+  "completed": true,
+  "gpu_hours": 0.0,
+  "steps": [
+    {"description": "Read 001 per-model artifacts (consolidated.json, per-model head_localization.json and antonym_perf_v_heads.json) and 001's committed anchor values for GPT-J/NeoX; cross-checked the GPT-J anchor against the replication disk (per-seed argmax then mean reproduces 65.9% / peak_frac 0.361).", "command": "python workspace/analyze.py", "exit_code": 0, "outputs": ["results/derived_master.json"]},
+    {"description": "Assembled 6-rung master table and fit peak_layer = alpha*L + beta (OLS + through-origin) over all rungs and over the MHA subset; computed effect-size vs era/scale, concentration by architecture, induction enrichment ratios, #heads plateau as fraction of n_heads.", "command": "python workspace/analyze.py", "exit_code": 0, "outputs": ["results/derived_master.json"]},
+    {"description": "Built 3 figures reusing 001's palette/markers: effect-size-vs-era, peak-layer-vs-depth fit (headline), concentration-vs-family.", "command": "python workspace/make_figures.py", "exit_code": 0, "outputs": ["results/fig1_effect_size_vs_era.png", "results/fig2_peak_layer_vs_depth_fit.png", "results/fig3_concentration_vs_family.png"]}
+  ],
+  "key_results": {
+    "peak_layer_fit_MHA_through_origin": "peak_layer = 0.30*L (alpha=0.30 ~ paper's L/3); peak-fraction 0.315 +/- 0.048 across GPT-J, NeoX, Llama-2, OLMo-2; residuals within +/-1.9 layers",
+    "peak_layer_fit_MHA_OLS": {"alpha": 0.135, "beta": 5.94, "R2": 0.309, "note": "low R2 is a range artifact: MHA depths span only 28-44"},
+    "peak_layer_fit_all_rungs_OLS": {"alpha": 0.019, "beta": 12.62, "R2": 0.001, "note": "single depth-proportional rule collapses because GQA Qwen breaks it"},
+    "peak_frac_MHA_vs_GQA": {"MHA": "0.315 +/- 0.048", "GQA": "0.593 +/- 0.05", "note": "GQA trigger ~2x deeper (~0.6*L)"},
+    "effect_size_range": "mean ZS FV 45.0-92.2% across 2021->2025; gap over no-FV baseline 42.7-86.9 pp",
+    "effect_size_vs_year": {"slope_pct_per_yr": 1.0, "R2": 0.01, "verdict": "holds - no monotone era trend"},
+    "effect_size_vs_scale": {"fv_vs_log10params_r": -0.44, "R2": 0.19, "verdict": "weakly negative; family/pretraining dominates, not size"},
+    "concentration_MHA_vs_GQA": {"MHA_conc": 0.933, "GQA_conc": 0.805, "MHA_mean_layer_frac": 0.475, "GQA_mean_layer_frac": 0.621, "verdict": "signature preserved; GQA sits deeper"},
+    "induction_enrichment_ratio_topK_over_all": {"GPT-J-6B": 4.18, "Qwen3-8B": 1.95, "Llama-2-7B": 1.88, "Qwen2.5-7B": 1.23, "OLMo-2-7B": 0.74, "verdict": "persists directionally except OLMo-2; weakens sharply after GPT-J"},
+    "numheads_plateau_k": {"OLMo-2-7B": 8, "GPT-J-6B": 10, "Llama-2-7B": 11, "Qwen2.5-7B": 25, "Qwen3-8B": 27, "k_frac_of_heads_MHA": "0.25-0.63", "k_frac_of_heads_GQA": "0.84-0.89", "verdict": "~10-head plateau holds for MHA; GQA needs proportionally ~2.5x more"}
+  },
+  "comparison_to_original": [
+    {"quantity": "peak_layer ~ alpha*L fit (paper canonical |L|/3, alpha=0.333)", "original": "0.333 (paper heuristic)", "followup": "MHA alpha=0.30 (through origin), holds; all-rung single slope alpha=0.02 R2=0.00 (GQA breaks it)", "source_file": "paper.pdf (|L|/3 heuristic) + 001 consolidated.json per_task_peaklayer + head_localization.json n_layers", "note": "L/3 confirmed for MHA across 3 families; GQA Qwen drifts to ~0.6*L"},
+    {"quantity": "GPT-J anchor mean ZS FV @ peak (3-task subset)", "original": "65.9%", "followup": "65.9% (re-read; cross-checked from replication disk = 65.87%)", "source_file": "001 followup_summary.json key_results.mean_zs_fv_peak; replication gptj_seed{42,1,2}/<task>/zs_results_layer_sweep.json", "note": "anchor unchanged; 002 adds no new measurement, only re-derivation"},
+    {"quantity": "GPT-J peak-layer fraction of depth", "original": "0.361", "followup": "0.361 (used as anchor in the fit)", "source_file": "001 followup_summary.json peak_layer_frac_depth_effective; cross-checked replication disk", "note": "anchors the MHA L/3 line"},
+    {"quantity": "peak-layer fraction, Qwen GQA family", "original": "GPT-J 0.36 (MHA anchor)", "followup": "Qwen2.5 0.643, Qwen3 0.542 (mean 0.593)", "source_file": "001 consolidated.json peak_frac_mean / per_task_peaklayer", "note": "MHA->GQA shift roughly doubles the peak fraction"},
+    {"quantity": "top-AIE mid-layer concentration", "original": "GPT-J 0.90", "followup": "MHA mean 0.93, GQA mean 0.81", "source_file": "001 consolidated.json concentration + head_localization.txt (GPT-J)", "note": "C5 signature preserved; GQA deeper/more diffuse"},
+    {"quantity": "induction-head overlap (top-K prefix-match / all)", "original": "GPT-J 0.182 / 0.044 (ratio 4.18)", "followup": "Llama-2 1.88, Qwen3 1.95, Qwen2.5 1.23, OLMo-2 0.74 (ratios)", "source_file": "001 consolidated.json pms_topK/pms_all + replication head_localization.txt (GPT-J)", "note": "C13 weakens after GPT-J; breaks for OLMo-2"},
+    {"quantity": "#heads sufficiency plateau (C16, ~10 heads)", "original": "GPT-J ~10", "followup": "OLMo-2 8, Llama-2 11 (MHA ~10); Qwen2.5 25, Qwen3 27 (GQA)", "source_file": "001 per_model/<m>/antonym_perf_v_heads.json (95%-of-max)", "note": "plateau holds for MHA; GQA needs ~2.5x more heads"}
+  ],
+  "artifacts": [
+    "results/derived_master.json",
+    "results/fig1_effect_size_vs_era.png",
+    "results/fig2_peak_layer_vs_depth_fit.png",
+    "results/fig3_concentration_vs_family.png",
+    "results/fig1_effect_size_vs_era.pdf",
+    "results/fig2_peak_layer_vs_depth_fit.pdf",
+    "results/fig3_concentration_vs_family.pdf"
+  ],
+  "deviations": [
+    "No instruct rung: 001 skipped Llama-3.1-8B-Instruct (gated), so the base-vs-instruct confound named in the instruction could not be tested; flagged, not worked around.",
+    "GPT-NeoX rung is antonym-only (single task) as inherited from 001; it enters the effect-size and peak-layer fits but has no concentration/induction/#heads data.",
+    "Qwen3 country-capital FV failed entirely (001); its spurious layer-0 'peak' is excluded from Qwen3's effective peak layer (0.542). The all-task value (0.361) is also recorded in derived_master.json.",
+    "Anchor values (GPT-J, NeoX) taken from 001's committed numbers rather than recomputed, to avoid method drift; independently cross-checked against the replication disk (GPT-J peak 65.87% ~ 001's 65.9%; peak_frac 0.361 exact; baseline within 0.3 pp).",
+    "n=6 rungs, single seed, bf16 (new models) vs fp16 (anchors) inherited from 001; scale/era trends have wide CIs (p~0.4-0.9), so reported as 'effect holds / no monotone trend', not precise slopes.",
+    "Low R2 on the MHA peak_layer~alpha*L OLS fit is a depth-range artifact (MHA L spans only 28-44); the robust statement is the tight peak-fraction cluster 0.315+/-0.05 ~ L/3."
+  ]
+}

@@ -1,0 +1,42 @@
+Antonym:
+fv results: 47.199999999999996 % +/- 2.0
+v_100 results: 4.8 % +/- 2.7
+KL100: 0.00278 +/- 0.00355
+v_full results: 40.5 % +/- 2.8000000000000003
+KLFull: 0.00887 +/- 0.00336 
+
+English-French:
+fv results: 43.8 % +/- 1.6
+v_100 results: 6.0 % +/- 1.5
+KL100: 0.0 +/- 0.0
+v_full results: 42.699999999999996 % +/- 6.1
+KLFull: 0.00587 +/- 0.00193 
+
+Capitalize:
+fv results: 67.5 % +/- 4.0
+v_100 results: 3.2 % +/- 1.6
+KL100: 0.0 +/- 0.0
+v_full results: 55.400000000000006 % +/- 6.6000000000000005
+KLFull: 0.00612 +/- 0.00116 
+
+Present-Past:
+fv results: 20.599999999999998 % +/- 6.0
+v_100 results: 2.7 % +/- 2.3
+KL100: 0.01448 +/- 0.01681
+v_full results: 6.800000000000001 % +/- 4.8
+KLFull: 0.01585 +/- 0.00331 
+
+Singular-Plural:
+fv results: 50.4 % +/- 8.6
+v_100 results: 17.7 % +/- 5.800000000000001
+KL100: 0.0 +/- 0.0
+v_full results: 23.3 % +/- 7.6
+KLFull: 0.0137 +/- 0.00148 
+
+Country-Capital:
+fv results: 87.5 % +/- 5.800000000000001
+v_100 results: 60.5 % +/- 22.0
+KL100: 0.0 +/- 0.0
+v_full results: 27.500000000000004 % +/- 15.9
+KLFull: 0.00175 +/- 0.00034 
+

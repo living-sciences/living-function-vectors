@@ -1,0 +1,21 @@
+{
+  "environment": {
+    "python_version": "3.10.20",
+    "gpu_available": true,
+    "gpu_model": "NVIDIA A100 80GB PCIe (x4)",
+    "key_packages": {
+      "torch": "2.14.0+cu130",
+      "transformers": "4.49.0",
+      "numpy": "1.25.0",
+      "pandas": "1.5.3",
+      "scikit-learn": "1.3.0",
+      "accelerate": "1.14.0",
+      "nnsight": "0.7.0",
+      "baukit": "git+main",
+      "datasets": "2.14.3"
+    },
+    "hf_cache_gptj": "/net/projects2/chai-lab/shared_models (complete)",
+    "hf_cache_gptneox": "/net/projects2/chai-lab-models/haokunliu/alignment-batch/hf-cache (1/46 shards, needs download)"
+  },
+  "notes": "Env built with uv venv (python 3.10.20). conda unavailable; approximated fv_environment.yml with pip/uv installs. torch resolved to 2.14.0+cu130 (CUDA works on A100). gpt-j-6b loads in fp32 and generates correctly."
+}

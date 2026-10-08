@@ -1,0 +1,37 @@
+# Python environments
+.venv/
+venv/
+*venv/
+env/
+ENV/
+.uvcache/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Editor / OS
+.vscode/
+.DS_Store
+
+# Model weights and large activation / effect tensors (see LARGE_FILES_OMITTED.md)
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.gguf
+*.ckpt
+*.h5
+*.npy
+*.npz
+acts/
+
+# Secrets (never commit)
+.env
+.env.*
+*.key
+*.pem
+
+# Transcripts
+*transcript*.jsonl

@@ -1,0 +1,68 @@
+{
+  "antonym": {
+    "10": {
+      "peak_layer": 0,
+      "peak_fv": 0.0068,
+      "peak_frac": 0.0
+    },
+    "20": {
+      "peak_layer": 12,
+      "peak_fv": 0.0171,
+      "peak_frac": 0.375
+    },
+    "30": {
+      "peak_layer": 14,
+      "peak_fv": 0.0171,
+      "peak_frac": 0.438
+    },
+    "40": {
+      "peak_layer": 14,
+      "peak_fv": 0.0239,
+      "peak_frac": 0.438
+    }
+  },
+  "country-capital": {
+    "10": {
+      "peak_layer": 3,
+      "peak_fv": 0.0244,
+      "peak_frac": 0.094
+    },
+    "20": {
+      "peak_layer": 14,
+      "peak_fv": 0.1463,
+      "peak_frac": 0.438
+    },
+    "30": {
+      "peak_layer": 14,
+      "peak_fv": 0.1463,
+      "peak_frac": 0.438
+    },
+    "40": {
+      "peak_layer": 10,
+      "peak_fv": 0.1951,
+      "peak_frac": 0.312
+    }
+  },
+  "present-past": {
+    "10": {
+      "peak_layer": 17,
+      "peak_fv": 0.4746,
+      "peak_frac": 0.531
+    },
+    "20": {
+      "peak_layer": 17,
+      "peak_fv": 0.6441,
+      "peak_frac": 0.531
+    },
+    "30": {
+      "peak_layer": 15,
+      "peak_fv": 0.7119,
+      "peak_frac": 0.469
+    },
+    "40": {
+      "peak_layer": 17,
+      "peak_fv": 0.6102,
+      "peak_frac": 0.531
+    }
+  }
+}

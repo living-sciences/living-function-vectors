@@ -1,0 +1,27 @@
+=== step9 english-french ===
+- This IS expected if you are initializing GPTJForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing GPTJForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Namespace(dataset_name='english-french', n_eval_templates=20, edit_layer=9, n_top_heads=10, model_name='EleutherAI/gpt-j-6b', root_data_dir='../dataset_files', save_path_root='results/gptj', seed=5678, device='cuda', mean_activations_path=None, test_split=0.3, n_shots=10, n_trials=25, prefixes={'input': 'Q:', 'output': 'A:', 'instructions': ''}, separators={'input': '\n', 'output': '\n\n', 'instructions': ''})
+Loading Model
+Loading:  EleutherAI/gpt-j-6b
+Loading Dataset
+Computing Mean Activations
+Computing Portability
+=== step9 present-past ===
+- This IS expected if you are initializing GPTJForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing GPTJForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Namespace(dataset_name='present-past', n_eval_templates=20, edit_layer=9, n_top_heads=10, model_name='EleutherAI/gpt-j-6b', root_data_dir='../dataset_files', save_path_root='results/gptj', seed=5678, device='cuda', mean_activations_path=None, test_split=0.3, n_shots=10, n_trials=25, prefixes={'input': 'Q:', 'output': 'A:', 'instructions': ''}, separators={'input': '\n', 'output': '\n\n', 'instructions': ''})
+Loading Model
+Loading:  EleutherAI/gpt-j-6b
+Loading Dataset
+Computing Mean Activations
+Computing Portability
+=== step9 singular-plural ===
+- This IS expected if you are initializing GPTJForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing GPTJForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Namespace(dataset_name='singular-plural', n_eval_templates=20, edit_layer=9, n_top_heads=10, model_name='EleutherAI/gpt-j-6b', root_data_dir='../dataset_files', save_path_root='results/gptj', seed=5678, device='cuda', mean_activations_path=None, test_split=0.3, n_shots=10, n_trials=25, prefixes={'input': 'Q:', 'output': 'A:', 'instructions': ''}, separators={'input': '\n', 'output': '\n\n', 'instructions': ''})
+Loading Model
+Loading:  EleutherAI/gpt-j-6b
+Loading Dataset
+Computing Mean Activations
+Computing Portability

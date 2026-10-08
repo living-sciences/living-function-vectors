@@ -1,0 +1,63 @@
+{
+  "extraction_mean_abs_diff": 6.713569018756971e-05,
+  "extraction_max_abs_diff": 0.008447408676147461,
+  "extraction_rel_diff": 0.0005610471067379283,
+  "baukit_mean_abs": 0.11966141313314438,
+  "top_heads_baukit": [
+    [
+      11,
+      0,
+      0.0624
+    ],
+    [
+      8,
+      1,
+      0.0511
+    ],
+    [
+      9,
+      14,
+      0.051
+    ],
+    [
+      15,
+      5,
+      0.0497
+    ],
+    [
+      12,
+      10,
+      0.0338
+    ],
+    [
+      6,
+      6,
+      0.0191
+    ],
+    [
+      8,
+      0,
+      0.0179
+    ],
+    [
+      24,
+      6,
+      0.0161
+    ],
+    [
+      10,
+      11,
+      0.0125
+    ],
+    [
+      11,
+      1,
+      0.0089
+    ]
+  ],
+  "antonym_L9_zs_top1_baukit": 0.490625,
+  "antonym_L9_clean_top1_baukit": 0.009375,
+  "antonym_L9_zs_top1_nnsight": 0.490625,
+  "antonym_L9_clean_top1_nnsight": 0.009375,
+  "filter_set_size": 320
+}

@@ -1,0 +1,7 @@
+loading gemma4 ...
+loaded in 9s; n_layers=48 attn_layers=48
+[shape-guard PASS] n_heads=16 head_dim(s)=[256, 512] o_proj.out=3840 on 48 attn layers
+  filter_test=300 filter_val=144
+  CIE done 14.5 min
+  ZS sweep 18.3 min; peak L25 FV=0.180 base=0.000
+[done] antonym 34.9min peak L25(0.521) ZS FV=0.180 base=0.000 SL=0.717

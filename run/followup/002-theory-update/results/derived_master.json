@@ -1,0 +1,374 @@
+{
+  "models": [
+    {
+      "name": "GPT-J-6B",
+      "year": 2021,
+      "family": "EleutherAI",
+      "attn": "MHA",
+      "params_B": 6.0,
+      "L": 28,
+      "n_heads": 16,
+      "K": 10,
+      "mean_zs_peak": 65.9,
+      "mean_zs_canon": 49.6,
+      "baseline": 3.2,
+      "per_task_peaklayer": {
+        "antonym": 11,
+        "country-capital": 10,
+        "present-past": 9
+      },
+      "peak_layer_eff": 10.11,
+      "concentration": 0.9,
+      "mean_layer_frac": null,
+      "pms_topK": 0.1821,
+      "pms_all": 0.0436,
+      "numheads_k": 10,
+      "prov": "001 followup_summary/report (peak 65.9, frac 0.361, base 3.2); replication head_localization.txt for induction; cross-checked vs replication gptj_seed{42,1,2} disk",
+      "peak_frac_eff": 0.361,
+      "gap": 62.7
+    },
+    {
+      "name": "GPT-NeoX-20B",
+      "year": 2022,
+      "family": "EleutherAI",
+      "attn": "MHA",
+      "params_B": 20.0,
+      "L": 44,
+      "n_heads": 64,
+      "K": 50,
+      "mean_zs_peak": 57.1,
+      "mean_zs_canon": null,
+      "baseline": 2.1,
+      "per_task_peaklayer": {
+        "antonym": 12
+      },
+      "peak_layer_eff": 12.01,
+      "concentration": null,
+      "mean_layer_frac": null,
+      "pms_topK": null,
+      "pms_all": null,
+      "numheads_k": null,
+      "prov": "001 followup_summary (NeoX antonym-only peak 57.1 @L12, frac 0.273); cross-checked vs replication gptneox/antonym disk (argmax=12)",
+      "peak_frac_eff": 0.273,
+      "gap": 55.0
+    },
+    {
+      "name": "Llama-2-7B",
+      "year": 2023,
+      "family": "Llama",
+      "attn": "MHA",
+      "params_B": 6.7,
+      "L": 32,
+      "n_heads": 32,
+      "K": 20,
+      "mean_zs_peak": 92.2,
+      "mean_zs_canon": 89.1,
+      "baseline": 8.7,
+      "per_task_peaklayer": {
+        "antonym": 12,
+        "country-capital": 10,
+        "present-past": 3
+      },
+      "peak_layer_eff": 8.33,
+      "concentration": 0.95,
+      "mean_layer_frac": 0.436,
+      "pms_topK": 0.0479,
+      "pms_all": 0.0255,
+      "numheads_k": 11,
+      "prov": "001 consolidated.json[llama2-7b] + llama2-7b/head_localization.json + antonym_perf_v_heads.json",
+      "peak_frac_eff": 0.26,
+      "gap": 83.5
+    },
+    {
+      "name": "Qwen2.5-7B",
+      "year": 2024,
+      "family": "Qwen",
+      "attn": "GQA",
+      "params_B": 7.6,
+      "L": 28,
+      "n_heads": 28,
+      "K": 18,
+      "mean_zs_peak": 74.6,
+      "mean_zs_canon": 6.4,
+      "baseline": 1.8,
+      "per_task_peaklayer": {
+        "antonym": 16,
+        "country-capital": 19,
+        "present-past": 19
+      },
+      "peak_layer_eff": 18.0,
+      "concentration": 0.611,
+      "mean_layer_frac": 0.663,
+      "pms_topK": 0.0537,
+      "pms_all": 0.0438,
+      "numheads_k": 25,
+      "prov": "001 consolidated.json[qwen2.5-7b] + qwen2.5-7b/head_localization.json + antonym_perf_v_heads.json",
+      "peak_frac_eff": 0.643,
+      "gap": 72.8
+    },
+    {
+      "name": "Qwen3-8B-Base",
+      "year": 2025,
+      "family": "Qwen",
+      "attn": "GQA",
+      "params_B": 8.2,
+      "L": 36,
+      "n_heads": 32,
+      "K": 20,
+      "mean_zs_peak": 45.0,
+      "mean_zs_canon": 6.3,
+      "baseline": 2.3,
+      "per_task_peaklayer": {
+        "antonym": 19,
+        "country-capital": 0,
+        "present-past": 20
+      },
+      "peak_layer_eff": 19.5,
+      "concentration": 1.0,
+      "mean_layer_frac": 0.578,
+      "pms_topK": 0.0752,
+      "pms_all": 0.0385,
+      "numheads_k": 27,
+      "prov": "001 consolidated.json[qwen3-8b] + qwen3-8b/head_localization.json + antonym_perf_v_heads.json",
+      "peak_frac_eff": 0.542,
+      "gap": 42.7
+    },
+    {
+      "name": "OLMo-2-7B",
+      "year": 2025,
+      "family": "OLMo",
+      "attn": "MHA",
+      "params_B": 7.3,
+      "L": 32,
+      "n_heads": 32,
+      "K": 20,
+      "mean_zs_peak": 89.3,
+      "mean_zs_canon": 86.3,
+      "baseline": 2.4,
+      "per_task_peaklayer": {
+        "antonym": 9,
+        "country-capital": 12,
+        "present-past": 14
+      },
+      "peak_layer_eff": 11.67,
+      "concentration": 0.95,
+      "mean_layer_frac": 0.514,
+      "pms_topK": 0.0187,
+      "pms_all": 0.0252,
+      "numheads_k": 8,
+      "prov": "001 consolidated.json[olmo2-7b] + olmo2-7b/head_localization.json + antonym_perf_v_heads.json",
+      "peak_frac_eff": 0.365,
+      "gap": 86.9
+    }
+  ],
+  "analyses": {
+    "peak_layer_fit_all": {
+      "label": "all 6 rungs (incl. GQA Qwen)",
+      "n": 6,
+      "members": [
+        "GPT-J-6B",
+        "GPT-NeoX-20B",
+        "Llama-2-7B",
+        "Qwen2.5-7B",
+        "Qwen3-8B-Base",
+        "OLMo-2-7B"
+      ],
+      "model": "peak_layer = alpha*L + beta (OLS, effective peak layer)",
+      "alpha": 0.0194,
+      "beta": 12.623,
+      "R2": 0.001,
+      "pval": 0.9607,
+      "alpha_through_origin": 0.3881,
+      "R2_through_origin": -0.253,
+      "residuals_ols": {
+        "GPT-J-6B": -3.06,
+        "GPT-NeoX-20B": -1.47,
+        "Llama-2-7B": -4.91,
+        "Qwen2.5-7B": 4.83,
+        "Qwen3-8B-Base": 6.18,
+        "OLMo-2-7B": -1.57
+      },
+      "residuals_origin": {
+        "GPT-J-6B": -0.76,
+        "GPT-NeoX-20B": -5.07,
+        "Llama-2-7B": -4.09,
+        "Qwen2.5-7B": 7.13,
+        "Qwen3-8B-Base": 5.53,
+        "OLMo-2-7B": -0.75
+      }
+    },
+    "peak_layer_fit_MHA": {
+      "label": "MHA-only (GPT-J, NeoX, Llama-2, OLMo-2)",
+      "n": 4,
+      "members": [
+        "GPT-J-6B",
+        "GPT-NeoX-20B",
+        "Llama-2-7B",
+        "OLMo-2-7B"
+      ],
+      "model": "peak_layer = alpha*L + beta (OLS, effective peak layer)",
+      "alpha": 0.135,
+      "beta": 5.94,
+      "R2": 0.309,
+      "pval": 0.4446,
+      "alpha_through_origin": 0.3044,
+      "R2_through_origin": -0.193,
+      "residuals_ols": {
+        "GPT-J-6B": 0.39,
+        "GPT-NeoX-20B": 0.13,
+        "Llama-2-7B": -1.93,
+        "OLMo-2-7B": 1.41
+      },
+      "residuals_origin": {
+        "GPT-J-6B": 1.59,
+        "GPT-NeoX-20B": -1.38,
+        "Llama-2-7B": -1.41,
+        "OLMo-2-7B": 1.93
+      }
+    },
+    "peak_frac_by_arch": {
+      "MHA_mean": 0.315,
+      "MHA_std": 0.048,
+      "MHA_values": {
+        "GPT-J-6B": 0.361,
+        "GPT-NeoX-20B": 0.273,
+        "Llama-2-7B": 0.26,
+        "OLMo-2-7B": 0.365
+      },
+      "GQA_mean": 0.593,
+      "GQA_std": 0.05,
+      "GQA_values": {
+        "Qwen2.5-7B": 0.643,
+        "Qwen3-8B-Base": 0.542
+      },
+      "note": "MHA depths span only 28-44, so OLS R^2 is unstable; the tight peak_frac cluster (mean~1/3) is the robust statement. GQA peak_frac ~2x the MHA value."
+    },
+    "effect_size_vs_era": {
+      "fv_vs_year_all": {
+        "slope": 0.97,
+        "r": 0.086,
+        "r2": 0.007,
+        "p": 0.8712
+      },
+      "gap_vs_year_all": {
+        "slope": 1.28,
+        "r": 0.123,
+        "r2": 0.015,
+        "p": 0.8171
+      },
+      "fv_vs_log10params_all": {
+        "slope": -42.3727,
+        "r": -0.435,
+        "r2": 0.19,
+        "p": 0.3882
+      },
+      "note": "n=6; family-split has too few points to regress, reported descriptively"
+    },
+    "concentration_by_arch": {
+      "MHA_models": [
+        "GPT-J-6B",
+        "Llama-2-7B",
+        "OLMo-2-7B"
+      ],
+      "GQA_models": [
+        "Qwen2.5-7B",
+        "Qwen3-8B-Base"
+      ],
+      "MHA_concentration_mean": 0.933,
+      "GQA_concentration_mean": 0.805,
+      "MHA_mean_layer_frac": 0.475,
+      "GQA_mean_layer_frac": 0.621,
+      "per_model": {
+        "GPT-J-6B": {
+          "attn": "MHA",
+          "concentration": 0.9,
+          "mean_layer_frac": null
+        },
+        "Llama-2-7B": {
+          "attn": "MHA",
+          "concentration": 0.95,
+          "mean_layer_frac": 0.436
+        },
+        "Qwen2.5-7B": {
+          "attn": "GQA",
+          "concentration": 0.611,
+          "mean_layer_frac": 0.663
+        },
+        "Qwen3-8B-Base": {
+          "attn": "GQA",
+          "concentration": 1.0,
+          "mean_layer_frac": 0.578
+        },
+        "OLMo-2-7B": {
+          "attn": "MHA",
+          "concentration": 0.95,
+          "mean_layer_frac": 0.514
+        }
+      }
+    },
+    "induction_overlap": {
+      "GPT-J-6B": {
+        "pms_topK": 0.1821,
+        "pms_all": 0.0436,
+        "enrichment_ratio": 4.18,
+        "enriched": true
+      },
+      "Llama-2-7B": {
+        "pms_topK": 0.0479,
+        "pms_all": 0.0255,
+        "enrichment_ratio": 1.88,
+        "enriched": true
+      },
+      "Qwen2.5-7B": {
+        "pms_topK": 0.0537,
+        "pms_all": 0.0438,
+        "enrichment_ratio": 1.23,
+        "enriched": true
+      },
+      "Qwen3-8B-Base": {
+        "pms_topK": 0.0752,
+        "pms_all": 0.0385,
+        "enrichment_ratio": 1.95,
+        "enriched": true
+      },
+      "OLMo-2-7B": {
+        "pms_topK": 0.0187,
+        "pms_all": 0.0252,
+        "enrichment_ratio": 0.74,
+        "enriched": false
+      }
+    },
+    "numheads_vs_scale": {
+      "GPT-J-6B": {
+        "n_heads": 16,
+        "attn": "MHA",
+        "plateau_k": 10,
+        "k_frac_of_heads": 0.625
+      },
+      "Llama-2-7B": {
+        "n_heads": 32,
+        "attn": "MHA",
+        "plateau_k": 11,
+        "k_frac_of_heads": 0.344
+      },
+      "Qwen2.5-7B": {
+        "n_heads": 28,
+        "attn": "GQA",
+        "plateau_k": 25,
+        "k_frac_of_heads": 0.893
+      },
+      "Qwen3-8B-Base": {
+        "n_heads": 32,
+        "attn": "GQA",
+        "plateau_k": 27,
+        "k_frac_of_heads": 0.844
+      },
+      "OLMo-2-7B": {
+        "n_heads": 32,
+        "attn": "MHA",
+        "plateau_k": 8,
+        "k_frac_of_heads": 0.25
+      }
+    }
+  }
+}

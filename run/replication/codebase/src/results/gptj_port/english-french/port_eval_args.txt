@@ -1,0 +1,50 @@
+{
+  "dataset_name": "english-french",
+  "n_eval_templates": 20,
+  "edit_layer": 9,
+  "n_top_heads": 10,
+  "model_name": "EleutherAI/gpt-j-6b",
+  "root_data_dir": "../dataset_files",
+  "save_path_root": "results/gptj",
+  "seed": 5678,
+  "device": "cuda",
+  "mean_activations_path": "results/gptj/english-french/english-french_mean_head_activations.pt",
+  "test_split": 0.3,
+  "n_shots": 10,
+  "n_trials": 25,
+  "prefixes": {
+    "input": "Q:",
+    "output": "A:",
+    "instructions": ""
+  },
+  "separators": {
+    "input": "\n",
+    "output": "\n\n",
+    "instructions": ""
+  },
+  "templates": [
+    "question:{}\nanswer:{}\n\n",
+    "question:{}\nanswer:{}|",
+    "A:{}\nB:{}\n\n",
+    "Question:{}\n\nAnswer:{}\n\n",
+    "Input:{} Output:{}|",
+    "{}\n ->{}\n\n",
+    "{}\n :{}\n",
+    "input:{} output:{}",
+    "question:{} answer:{}",
+    "x:{}\ny:{}|",
+    "input:{}|output:{}\n",
+    "{}  ->{}\n\n",
+    "input:{} output:{}\n",
+    "In:{} Out:{}|",
+    "text:{}|label:{}\n\n",
+    "x:{} f(x):{}\n",
+    "x:{}|y:{}\n\n",
+    "A:{} B:{}",
+    "text:{}|label:{}\n",
+    "x:{}\ny:{}\n\n"
+  ],
+  "fs_results_file_name": "results/gptj_port/english-french/fs_port_eval.json",
+  "fs_shuffled_results_file_name": "results/gptj_port/english-french/fs_shuffled_port_eval.json",
+  "zs_results_file_name": "results/gptj_port/english-french/zs_port_eval.json"
+}

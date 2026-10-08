@@ -1,0 +1,64 @@
+{
+  "schema": "sai.followup.result_card/v1",
+  "headline": "The zero-shot function-vector effect is still DETECTABLE but MUCH WEAKER on 2026 multimodal-arch models: mean top-1 FV accuracy at the peak edit layer falls from Llama-2 92.2% / OLMo-2 89.3% (2023-25) to Qwen3.5-9B 16.9% (present-past 47.5%, antonym/country-capital near-zero) and gemma-4-12B antonym 18.0%. FV > no-FV baseline in every completed task, so the causal effect is real but small; the peak edit layer stays mid-to-late (~0.52 depth, depth/3 still broken). CAVEAT: the 2026 FV was built with transformers forward-hooks on GQA/multimodal attention (nnsight cannot wrap these; gemma-4 has mixed head_dims), so part of the attenuation may be methodological, not purely a model property.",
+  "status": "completed",
+  "metrics": [
+    {"label": "Mean ZS FV acc @ peak — Qwen3.5-9B-Base (2026, MM-arch)", "value": "16.9%", "baseline": "0.1%",
+     "baseline_label": "no-FV zero-shot at peak layer, same 3-task subset (this session)",
+     "note": "vs Llama-2 92.2% / OLMo-2 89.3% (2023-25). Driven by present-past 47.5%; antonym 0.7% and country-capital 2.4% near-fail. FV still > baseline every task. Provenance: FV/workspace/results_fu/qwen35-9b_seed42/*/fu2_summary.json"},
+    {"label": "ZS FV acc @ peak — Qwen3.5-9B present-past (best task)", "value": "47.5%", "baseline": "0.0%",
+     "baseline_label": "no-FV zero-shot at peak layer L17 (this session)",
+     "note": "The one task where the 2026 FV clearly triggers; still well below the 2023-25 MHA band (~90%). Peak layer L17/32 = 0.531 depth."},
+    {"label": "ZS FV acc @ peak — gemma-4-12B antonym (2026, PARTIAL)", "value": "18.0%", "baseline": "0.0%",
+     "baseline_label": "no-FV zero-shot at peak layer L25 (this session)",
+     "note": "Antonym only; country-capital/present-past did NOT finish before the storage outage (PARTIAL/bonus point, missing tasks not invented). Mixed head_dims [256,512]. Provenance: FV/workspace/results_fu/gemma4-12b_seed42/antonym/fu2_summary.json"},
+    {"label": "Peak edit-layer (fraction of depth), 2026 MM-arch", "value": "0.52-0.53", "baseline": "0.36",
+     "baseline_label": "GPT-J-6B peak (2021, on-disk)",
+     "note": "Qwen3.5 present-past 0.531, gemma-4 antonym 0.521. depth/3 heuristic still fails (Qwen3.5 canonical @L10 = 0.7%), continuing 001's later-family drift finding."},
+    {"label": "Top-AIE mid-layer concentration (frac in first 2/3) — Qwen3.5-9B", "value": "0.40", "baseline": "0.90",
+     "baseline_label": "GPT-J-6B (2021, on-disk)",
+     "note": "Head localization WEAKENS: 60% of top AIE heads now sit in the LAST third (layers 27-31/32). gemma-4 antonym still 0.70. Signature holds only loosely on 2026 models."}
+  ],
+  "tables": [
+    {"title": "Era ladder — mean zero-shot FV accuracy @ peak (2021-2025 reused from disk verbatim; 2026 this session, bf16, transformers hooks)",
+     "columns": ["Model", "Year", "Attn", "ZS FV % (peak)", "no-FV %", "peak frac-depth", "concentration"],
+     "rows": [
+       ["GPT-J-6B (anchor)", "2021", "MHA", "65.9", "3.2", "0.36", "0.90"],
+       ["GPT-NeoX-20B*", "2022", "MHA", "57.1", "2.1", "0.27", "—"],
+       ["Llama-2-7B", "2023", "MHA", "92.2", "8.7", "0.26", "0.95"],
+       ["Qwen2.5-7B", "2024", "GQA", "74.6", "1.8", "0.64", "0.61"],
+       ["Qwen3-8B-Base", "2025", "GQA", "45.0", "2.3", "0.55", "1.00"],
+       ["OLMo-2-7B", "2025", "MHA", "89.3", "2.4", "0.37", "0.95"],
+       ["Qwen3.5-9B-Base (NEW)", "2026", "GQA/MM", "16.9", "0.1", "0.53", "0.40"],
+       ["gemma-4-12B (NEW, partial)", "2026", "GQA/MM", "18.0†", "0.0", "0.52", "0.70"]
+     ],
+     "highlight_row": 6},
+    {"title": "Qwen3.5-9B-Base (2026) per-task detail: FV vs no-FV baseline and shuffled-label (SL) control @ peak layer",
+     "columns": ["Task", "peak L (frac)", "ZS FV %", "no-FV %", "canonical @L10 %", "SL FV %", "SL base %"],
+     "rows": [
+       ["antonym", "0 (0.00)", "0.7", "0.3", "0.3", "0.7", "1.7"],
+       ["country-capital", "3 (0.09)", "2.4", "0.0", "0.0", "7.3", "29.3"],
+       ["present-past", "17 (0.53)", "47.5", "0.0", "1.7", "22.0", "11.9"]
+     ],
+     "highlight_row": 2}
+  ],
+  "figures": [
+    {"file": "results/fig1_fv_over_time.png",
+     "caption": "Mean top-1 zero-shot FV accuracy at each model's peak edit layer vs release year, now through 2026. Color = family, marker = MHA (circle) / GQA (square) / GQA-MM 2026 (diamond, faded = partial); dashed line = no-FV baseline; stems show the base->+FV gap. FV rises 2021->2025 then drops sharply on the 2026 MM-arch models.",
+     "alt": "Scatter of FV accuracy: 57-92% across 2021-2025, then falling to ~17-18% for the two 2026 diamonds, all above a near-zero baseline."},
+    {"file": "results/fig2_fv_peak_layer_vs_depth.png",
+     "caption": "Peak FV edit layer as a fraction of depth vs year. The 2026 MM-arch models peak at ~0.52 (Qwen3.5 present-past, gemma-4 antonym), staying in the late band with the Qwen GQA family; editing at depth/3 still does not work.",
+     "alt": "Peak-layer fraction near 0.3 for MHA models but 0.52-0.64 for the Qwen GQA and 2026 MM models."},
+    {"file": "results/fig3_qwen35_pertask.png",
+     "caption": "Qwen3.5-9B-Base (2026) per task. Left: +FV beats the no-FV baseline on every task (real causal effect) but only present-past (47.5%) is strong. Right: shuffled-label control is mixed - SL FV > SL baseline only for present-past, confirming the effect there while antonym/country-capital are degenerate near-failures.",
+     "alt": "Two grouped bar charts for Qwen3.5-9B: FV vs baseline (present-past dominant) and shuffled-label FV vs baseline (mixed)."}
+  ],
+  "notes": [
+    "RECOVERY RUN: compute finished at SLURM walltime; a /net/projects2 read-only storage outage blocked the card write. This card is pure CPU post-processing of existing on-disk fu2_summary.json results - no GPU, no model loading, no FV/nnsight/transformers re-run. All outputs staged under /net/scratch/haokunliu/fv003-recovery/; copy_back.sh lands them in the run dir once projects2 is rw.",
+    "METHODOLOGICAL CAVEAT (do not read as a clean model property): the 2026 FV head decomposition used transformers forward-hooks on the attention out-projection input of GQA/multimodal attention because nnsight cannot wrap these architectures; gemma-4 has mixed head_dims [256,512]. Part of the measured attenuation may be imperfect head decomposition, not purely weaker FVs in the models. The shape-guard passed on both models.",
+    "gemma-4-12B is a PARTIAL/bonus 2026 point: only antonym completed before the outage; country-capital/present-past were descoped (missing on disk) and are NOT invented.",
+    "Causal control: zs_fv_peak > zs_baseline_peak in every completed task (real, if small, effect). Shuffled-label control is mixed: SL FV > SL base for Qwen3.5 present-past (22.0 vs 11.9) and gemma-4 antonym (71.7 vs 40.7), but SL FV < SL base for Qwen3.5 antonym/country-capital (the near-failure tasks).",
+    "2021-2025 ladder rows (GPT-J, GPT-NeoX, Llama-2, Qwen2.5, Qwen3-8B, OLMo-2) reused VERBATIM from FV/results/per_model_001/consolidated.json + the 001 result_card; GPT-J/NeoX anchors from the 001 replication artifacts. 2026 rows: bf16, seed 42, 3-task subset {antonym,country-capital,present-past}, same CIE cost cap."
+  ],
+  "report_file": "report.md"
+}

@@ -1,0 +1,21 @@
+Could not find the bitsandbytes CUDA binary at PosixPath('/net/projects2/chai-lab-models/haokunliu/alignment-batch/alignment_papers/test-corpus/function-vectors/run/.venv/lib/python3.10/site-packages/bitsandbytes/libbitsandbytes_cuda130.so')
+The installed version of bitsandbytes was compiled without GPU support. 8-bit optimizers, 8-bit multiplication, and GPU quantization are unavailable.
+Some weights of the model checkpoint at EleutherAI/gpt-j-6b were not used when initializing GPTJForCausalLM: ['transformer.h.0.attn.bias', 'transformer.h.0.attn.masked_bias', 'transformer.h.1.attn.bias', 'transformer.h.1.attn.masked_bias', 'transformer.h.10.attn.bias', 'transformer.h.10.attn.masked_bias', 'transformer.h.11.attn.bias', 'transformer.h.11.attn.masked_bias', 'transformer.h.12.attn.bias', 'transformer.h.12.attn.masked_bias', 'transformer.h.13.attn.bias', 'transformer.h.13.attn.masked_bias', 'transformer.h.14.attn.bias', 'transformer.h.14.attn.masked_bias', 'transformer.h.15.attn.bias', 'transformer.h.15.attn.masked_bias', 'transformer.h.16.attn.bias', 'transformer.h.16.attn.masked_bias', 'transformer.h.17.attn.bias', 'transformer.h.17.attn.masked_bias', 'transformer.h.18.attn.bias', 'transformer.h.18.attn.masked_bias', 'transformer.h.19.attn.bias', 'transformer.h.19.attn.masked_bias', 'transformer.h.2.attn.bias', 'transformer.h.2.attn.masked_bias', 'transformer.h.20.attn.bias', 'transformer.h.20.attn.masked_bias', 'transformer.h.21.attn.bias', 'transformer.h.21.attn.masked_bias', 'transformer.h.22.attn.bias', 'transformer.h.22.attn.masked_bias', 'transformer.h.23.attn.bias', 'transformer.h.23.attn.masked_bias', 'transformer.h.24.attn.bias', 'transformer.h.24.attn.masked_bias', 'transformer.h.25.attn.bias', 'transformer.h.25.attn.masked_bias', 'transformer.h.26.attn.bias', 'transformer.h.26.attn.masked_bias', 'transformer.h.27.attn.bias', 'transformer.h.27.attn.masked_bias', 'transformer.h.3.attn.bias', 'transformer.h.3.attn.masked_bias', 'transformer.h.4.attn.bias', 'transformer.h.4.attn.masked_bias', 'transformer.h.5.attn.bias', 'transformer.h.5.attn.masked_bias', 'transformer.h.6.attn.bias', 'transformer.h.6.attn.masked_bias', 'transformer.h.7.attn.bias', 'transformer.h.7.attn.masked_bias', 'transformer.h.8.attn.bias', 'transformer.h.8.attn.masked_bias', 'transformer.h.9.attn.bias', 'transformer.h.9.attn.masked_bias']
+- This IS expected if you are initializing GPTJForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing GPTJForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Loading model EleutherAI/gpt-j-6b
+Loading:  EleutherAI/gpt-j-6b
+model converted to fp16
+model loaded in 27s
+  filter_set(test)=333/504  filter_set(valid)=145/216
+[done] antonym seed1 in 1710s  L9 zs FV top1=0.462 (clean 0.012)  top5heads=[(15, 5, 0.077), (11, 0, 0.0601), (9, 14, 0.0529), (8, 1, 0.051), (12, 10, 0.0456)]
+  filter_set(test)=167/170  filter_set(valid)=74/74
+[done] capitalize seed1 in 998s  L9 zs FV top1=0.671 (clean 0.000)  top5heads=[(15, 5, 0.1204), (12, 10, 0.0952), (9, 14, 0.0569), (15, 11, 0.0251), (14, 9, 0.0236)]
+  filter_set(test)=41/42  filter_set(valid)=17/18
+[done] country-capital seed1 in 506s  L9 zs FV top1=0.854 (clean 0.049)  top5heads=[(11, 0, 0.3464), (8, 1, 0.1948), (9, 14, 0.1671), (13, 13, 0.1432), (12, 10, 0.0963)]
+  filter_set(test)=772/987  filter_set(valid)=332/423
+[done] english-french seed1 in 3439s  L9 zs FV top1=0.689 (clean 0.016)  top5heads=[(15, 5, 0.1982), (9, 14, 0.1867), (12, 10, 0.065), (8, 1, 0.0531), (14, 0, 0.0328)]
+  filter_set(test)=59/61  filter_set(valid)=26/27
+[done] present-past seed1 in 574s  L9 zs FV top1=0.102 (clean 0.034)  top5heads=[(15, 5, 0.0655), (12, 10, 0.0527), (21, 2, 0.0332), (8, 1, 0.0322), (9, 14, 0.0173)]
+  filter_set(test)=43/43  filter_set(valid)=19/19
+[done] singular-plural seed1 in 518s  L9 zs FV top1=0.419 (clean 0.279)  top5heads=[(12, 10, 0.0436), (15, 5, 0.034), (13, 13, 0.0193), (8, 1, 0.0134), (14, 9, 0.0133)]

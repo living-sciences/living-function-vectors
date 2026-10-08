@@ -1,0 +1,83 @@
+{
+  "task": "present-past",
+  "seed": 42,
+  "n_layers": 32,
+  "n_heads": 16,
+  "n_attn_layers": 8,
+  "full_attn_layers": [
+    3,
+    7,
+    11,
+    15,
+    19,
+    23,
+    27,
+    31
+  ],
+  "n_top_heads": 10,
+  "peak_layer": 17,
+  "peak_frac_depth": 0.531,
+  "zs_fv_peak": 0.4745762711864407,
+  "zs_baseline_peak": 0.0,
+  "canonical_layer": 10,
+  "zs_fv_canonical": 0.01694915254237288,
+  "zs_baseline_canonical": 0.0,
+  "sl_fv_at_peak": 0.22033898305084745,
+  "sl_baseline_at_peak": 0.11864406779661017,
+  "top_heads": [
+    [
+      19,
+      6,
+      0.02558
+    ],
+    [
+      19,
+      7,
+      0.01558
+    ],
+    [
+      27,
+      7,
+      0.01014
+    ],
+    [
+      31,
+      8,
+      0.00867
+    ],
+    [
+      27,
+      10,
+      0.00866
+    ],
+    [
+      31,
+      4,
+      0.00824
+    ],
+    [
+      27,
+      4,
+      0.00752
+    ],
+    [
+      27,
+      2,
+      0.00588
+    ],
+    [
+      23,
+      14,
+      0.00586
+    ],
+    [
+      7,
+      10,
+      0.0056
+    ]
+  ],
+  "filter_test": 59,
+  "filter_val": 27,
+  "minutes": 4.7,
+  "dtype": "torch.bfloat16"
+}
